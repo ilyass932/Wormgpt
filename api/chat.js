@@ -5,12 +5,17 @@ function decrypt(text, keyHex) {
     try {
         if (!text || !keyHex) return null;
         const [ivHex, encryptedHex] = text.split(':');
+        if (!ivHex || !encryptedHex) {
+            console.error('Invalid encrypted format - missing IV or data');
+            return null;
+        }
         const iv = Buffer.from(ivHex, 'hex');
         const key = Buffer.from(keyHex, 'hex');
+        const encryptedData = Buffer.from(encryptedHex, 'hex');
         const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
-        let decrypted = decipher.update(encryptedHex, 'hex', 'utf8');
-        decrypted += decipher.final('utf8');
-        return decrypted;
+        let decrypted = decipher.update(encryptedData);
+        decrypted = Buffer.concat([decrypted, decipher.final()]);
+        return decrypted.toString('utf8');
     } catch (e) {
         console.error('Decryption failed:', e.message);
         return null;
