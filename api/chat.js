@@ -55,25 +55,51 @@ export default async function handler(req, res) {
         const selectedModel = model || 'moonshotai/kimi-k2-instruct-0905';
 
         // --- Backend System Prompt Injection ---
+        console.log('🔍 System Prompt Injection Debug:');
+
         // Clean incoming messages (remove any existing system prompt from frontend)
         let cleanMessages = (messages || []).filter(m => m.role !== 'system');
+        console.log(`- Received ${messages?.length || 0} messages from frontend`);
+        console.log(`- After filtering system prompts: ${cleanMessages.length} messages`);
 
         // Decrypt the correct prompt
         const secretKey = process.env.PROMPT_SECRET_KEY;
+        console.log(`- PROMPT_SECRET_KEY exists: ${!!secretKey}`);
+        if (secretKey) {
+            console.log(`- Secret key length: ${secretKey.length} chars`);
+        }
+
         let systemPromptText = "";
+        console.log(`- Selected Model: ${selectedModel}`);
 
         if (selectedModel.includes('kimi')) {
+            console.log('- Using ENCRYPTED_PROMPT_PRO for kimi model');
             systemPromptText = decrypt(ENCRYPTED_PROMPT_PRO, secretKey);
         } else if (selectedModel.includes('qwen')) {
+            console.log('- Using ENCRYPTED_PROMPT_FLASH for qwen model');
             systemPromptText = decrypt(ENCRYPTED_PROMPT_FLASH, secretKey);
+        } else {
+            console.warn(`⚠️ Model "${selectedModel}" does not match kimi or qwen patterns`);
         }
 
         // Add the decrypted system prompt as the first message
         if (systemPromptText) {
+            console.log(`✅ System prompt decrypted successfully (${systemPromptText.length} chars)`);
+            console.log(`- Preview (first 100 chars): ${systemPromptText.substring(0, 100)}...`);
             cleanMessages.unshift({ role: 'system', content: systemPromptText });
+            console.log(`✅ System prompt prepended. Total messages now: ${cleanMessages.length}`);
         } else {
+            console.error('❌ System prompt decryption FAILED');
+            console.error(`- Secret key exists: ${!!secretKey}`);
+            console.error(`- Model matched: ${selectedModel.includes('kimi') || selectedModel.includes('qwen')}`);
             console.warn('Backend Warning: System prompt decryption failed or PROMPT_SECRET_KEY is missing.');
         }
+
+        console.log(`📤 Preparing request to Groq API:`);
+        console.log(`- Model: ${selectedModel}`);
+        console.log(`- Total messages: ${cleanMessages.length}`);
+        console.log(`- First message role: ${cleanMessages[0]?.role || 'N/A'}`);
+        console.log(`- Last message role: ${cleanMessages[cleanMessages.length - 1]?.role || 'N/A'}`);
 
         const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
             method: 'POST',
