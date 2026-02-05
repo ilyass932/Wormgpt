@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WormGPT - Pricing</title>
+    <link rel="icon" type="image/png" href="wormgpt-avatar.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Global Reset & Variables */
+        :root {
+            --primary-red: #ff0033;
+            --neon-red: #ff0033;
+            --dark-red: #500000;
+            --bg-black: #050505;
+            --text-white: #ffffff;
+            --text-gray: #a0a0a0;
+            --font-display: 'Orbitron', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image:
+                linear-gradient(rgba(5, 5, 5, 0.9), rgba(5, 5, 5, 0.9)),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23200000' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            scrollbar-gutter: stable;
+        }
+
+        /* Background Animation Effect */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 0, 51, 0.05), transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+            animation: pulse-bg 10s infinite alternate;
+        }
+
+        @keyframes pulse-bg {
+            0% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Header */
+        header {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            padding: 12px 30px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 0, 0, 0.2);
+        }
+
+        .header-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-section.center {
+            flex: none;
+            justify-content: center;
+        }
+
+        .header-section.right {
+            justify-content: flex-end;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            height: 34px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-red);
+            text-shadow: 0 0 5px var(--dark-red);
+            font-family: var(--font-display);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            color: var(--text-white);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary-red);
+            text-shadow: 0 0 5px var(--primary-red);
+        }
+
+        nav a.active {
+            color: var(--primary-red);
+            text-shadow: 0 0 5px var(--primary-red);
+        }
+
+        .btn {
+            padding: 8px 18px;
+            border: 2px solid var(--primary-red);
+            background: transparent;
+            color: var(--primary-red);
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            font-family: var(--font-display);
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: rgba(255, 0, 51, 0.1);
+            color: var(--text-white);
+            box-shadow: 0 0 20px rgba(255, 0, 51, 0.4);
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding-top: 80px;
+            padding-bottom: 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        .pricing-hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+
+        .pricing-title {
+            font-size: 3.5rem;
+            color: var(--text-white);
+            font-family: var(--font-display);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(255, 0, 51, 0.3);
+        }
+
+        .pricing-title span {
+            color: var(--primary-red);
+        }
+
+        .pricing-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.8;
+        }
+
+        .telegram-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: rgba(0, 136, 204, 0.15);
+            border: 1px solid rgba(0, 136, 204, 0.3);
+            border-radius: 50px;
+            color: #0088cc;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .telegram-badge:hover {
+            background: rgba(0, 136, 204, 0.25);
+            border-color: #0088cc;
+            box-shadow: 0 0 25px rgba(0, 136, 204, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .telegram-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Pricing Cards */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+            padding: 0 20px;
+        }
+
+        .pricing-card {
+            background: linear-gradient(145deg, rgba(20, 20, 20, 0.9), rgba(10, 10, 10, 0.95));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 40px 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .pricing-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 51, 0.1), transparent);
+            transition: 0.6s;
+        }
+
+        .pricing-card:hover::before {
+            left: 100%;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-red);
+            box-shadow: 0 20px 60px rgba(255, 0, 51, 0.3);
+        }
+
+        .pricing-card.popular {
+            border-color: var(--primary-red);
+            box-shadow: 0 10px 40px rgba(255, 0, 51, 0.2);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-red);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(255, 0, 51, 0.4);
+            animation: pulse-badge 2s infinite;
+            user-select: none;
+            cursor: default;
+        }
+
+        @keyframes pulse-badge {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .plan-name {
+            font-size: 1.8rem;
+            font-family: var(--font-display);
+            color: var(--primary-red);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            user-select: none;
+            cursor: default;
+        }
+
+        .plan-model {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .price-container {
+            margin-bottom: 30px;
+        }
+
+        .price {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: var(--text-white);
+            font-family: var(--font-display);
+            line-height: 1;
+        }
+
+        .price-currency {
+            font-size: 2rem;
+            vertical-align: super;
+        }
+
+        .price-description {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            margin-top: 10px;
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 30px 0;
+        }
+
+        .features-list li {
+            padding: 12px 0;
+            color: var(--text-gray);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+        }
+
+        .features-list li::before {
+            content: "✓";
+            color: var(--primary-red);
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .buy-button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary-red), #cc0029);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-display);
+            letter-spacing: 1px;
+            box-shadow: 0 4px 20px rgba(255, 0, 51, 0.3);
+            text-decoration: none;
+        }
+
+        .buy-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 0, 51, 0.5);
+            background: linear-gradient(135deg, #ff1a47, var(--primary-red));
+        }
+
+        /* FAQ Section */
+        /* FAQ Section Redesign */
+        .faq-section {
+            margin-top: 100px;
+            padding: 40px 20px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .faq-title {
+            text-align: center;
+            font-size: 3rem;
+            font-family: var(--font-display);
+            margin-bottom: 60px;
+            background: linear-gradient(to right, #fff, #aaa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .faq-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 0, 51, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .faq-item.active {
+            background: rgba(20, 20, 20, 0.8);
+            border-color: var(--primary-red);
+            box-shadow: 0 0 20px rgba(255, 0, 51, 0.15);
+        }
+
+        .faq-header {
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .faq-question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-white);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-family: var(--font-display);
+            letter-spacing: 0.5px;
+        }
+
+        .faq-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--primary-red);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .faq-item.active .faq-body {
+            max-height: 500px;
+            /* Arbitrary large height */
+            opacity: 1;
+        }
+
+        .faq-content {
+            padding: 0 30px 30px 30px;
+            color: var(--text-gray);
+            line-height: 1.8;
+            font-size: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .pricing-title {
+                font-size: 2.5rem;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .price {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Standardized Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            cursor: default;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-red);
+        }
+    </style>
+    <base target="_blank">
+</head>
+
+<body>
+
+    <header>
+        <div class="header-section left">
+            <a href="index.html" style="text-decoration: none; display: flex; align-items: center;">
+                <div class="logo-container">
+                    <img src="wormgpt-avatar.png" alt="WormGPT Logo" class="logo-img">
+                    <span class="logo-text">Worm<span style="color: white;">GPT</span></span>
+                </div>
+            </a>
+        </div>
+        <nav class="header-section center">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="chat.html">Chat</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="pricing.html" class="active">Pricing</a></li>
+            </ul>
+        </nav>
+        <div class="header-section right">
+            <a href="chat.html" class="btn">Get Started</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="pricing-hero">
+            <h1 class="pricing-title">Choose Your <span>Power</span></h1>
+            <p class="pricing-subtitle">
+                Unlock unlimited potential with our credit-based plans. No subscriptions, no commitments—just pure AI
+                power when you need it.
+            </p>
+            <a href="https://t.me/wormgpt_admin" target="_blank" class="telegram-badge">
+                <svg class="telegram-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z" />
+                </svg>
+                Support & Purchase: @wormgpt_admin
+            </a>
+        </section>
+
+        <section class="pricing-grid">
+            <!-- Starter Plan -->
+            <div class="pricing-card">
+                <div class="plan-name">Starter</div>
+                <div class="plan-model">Tier I Entry</div>
+                <div class="price-container">
+                    <div class="price"><span class="price-currency">$</span>29<span
+                            style="font-size: 1.5rem;">.99</span>
+                    </div>
+                    <div class="price-description">1,500 Credits / Day • Quick Tasks</div>
+                </div>
+                <ul class="features-list">
+                    <li>1,500 AI Credits <strong>Daily</strong></li>
+                    <li>WormGPT Flash Access</li>
+                    <li><strong>Last 3 Chats Only (History)</strong></li>
+                    <li>Standard Processing Speed</li>
+                    <li>Standard Encryption</li>
+                    <li>24/7 Telegram Support</li>
+                    <li>Instant Activation Link</li>
+                </ul>
+                <a href="https://t.me/wormgpt_admin" target="_blank" class="buy-button">Buy Now</a>
+            </div>
+
+            <!-- Pro Plan (Popular) -->
+            <div class="pricing-card popular">
+                <span class="popular-badge">Most Popular</span>
+                <div class="plan-name">Professional</div>
+                <div class="plan-model">Tactical Intelligence</div>
+                <div class="price-container">
+                    <div class="price"><span class="price-currency">$</span>49<span
+                            style="font-size: 1.5rem;">.99</span></div>
+                    <div class="price-description">50,000 Credits / Day • more Reasoning</div>
+                </div>
+                <ul class="features-list">
+                    <li>50,000 AI Credits <strong>Daily</strong></li>
+                    <li><strong>Unlimited Chat History</strong></li>
+                    <li>WormGPT Flash + Pro Access</li>
+                    <li>Advanced File Synthesis</li>
+                    <li>Priority Processing Queue</li>
+                    <li>Priority Telegram Support</li>
+                    <li>Enhanced Memory Context</li>
+                </ul>
+                <a href="https://t.me/wormgpt_admin" target="_blank" class="buy-button">Buy Now</a>
+            </div>
+
+            <div class="pricing-card">
+                <div class="plan-name">Elite</div>
+                <div class="plan-model">Tier III Legendary</div>
+                <div class="price-container">
+                    <div class="price"><span class="price-currency">$</span>99<span
+                            style="font-size: 1.5rem;">.99</span></div>
+                    <div class="price-description">350,000 Credits / Day • Deep Thinking</div>
+                </div>
+                <ul class="features-list">
+                    <li>350,000 AI Credits <strong>Daily</strong></li>
+                    <li><strong>Global Persistent History</strong></li>
+                    <li>WormGPT Flash + Pro Access</li>
+                    <li>Stealth Mode (Zero Log Privacy)</li>
+                    <li>Mastery in Coding & Complex Logic</li>
+                    <li>VIP Concierge Support</li>
+                    <li>Complete Anonymity Shield</li>
+                </ul>
+                <a href="https://t.me/wormgpt_admin" target="_blank" class="buy-button">Buy Now</a>
+            </div>
+        </section>
+
+        <section class="faq-section">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+
+            <div class="faq-container">
+                <!-- FAQ 1 -->
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-header">
+                        <div class="faq-question">
+                            💳 How do I purchase credits?
+                        </div>
+                        <div class="faq-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="faq-body">
+                        <div class="faq-content">
+                            Purchasing is simple and secure. Click the "Buy Now" button on your preferred plan to be
+                            redirected to our
+                            official support channel (@wormgpt_admin). We accept <strong>PayPal, Cryptocurrency (BTC,
+                                ETH, USDT)</strong>,
+                            and other major payment methods. Your credits are activated instantly upon confirmation.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-header">
+                        <div class="faq-question">
+                            ⏰ How does the Daily Refresh work?
+                        </div>
+                        <div class="faq-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="faq-body">
+                        <div class="faq-content">
+                            Our plans use a unique <strong>"Use it or Lose it"</strong> system. Your credit allowance
+                            (e.g., 20,000 credits) is
+                            fully replenished every 24 hours. Unused credits from the previous day do not roll over.
+                            This ensures you always
+                            start your day with a fresh pool of power.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-header">
+                        <div class="faq-question">
+                            📊 How are token costs calculated?
+                        </div>
+                        <div class="faq-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="faq-body">
+                        <div class="faq-content">
+                            Transparency is key. Costs are based on the AI's response length:
+                            <br><br>
+                            • <strong>WormGPT Flash:</strong> 1 Output Token = 2 Credits (Fast & Efficient)<br>
+                            • <strong>WormGPT Pro:</strong> 1 Output Token = 5 Credits (Deep Reasoning)
+                            <br><br>
+                            You are charged based on the length of the AI's response, not your message. This ensures you
+                            only pay for what you receive. Your real-time balance is always displayed in the chat
+                            interface.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-header">
+                        <div class="faq-question">
+                            ⚖️ Is there a refund policy?
+                        </div>
+                        <div class="faq-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="faq-body">
+                        <div class="faq-content">
+                            Due to the irrevocable digital nature of API keys and credits, we generally do not offer
+                            refunds once a plan is activated.
+                            However, we prioritize your satisfaction—if you encounter technical issues, please contact
+                            support immediately, and we will resolve it.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            function toggleFaq(element) {
+                // Optional: Close others
+                /*
+                const allItems = document.querySelectorAll('.faq-item');
+                allItems.forEach(item => {
+                    if (item !== element) item.classList.remove('active');
+                });
+                */
+
+                // Toggle current
+                element.classList.toggle('active');
+            }
+        </script>
+    </main>
+
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "wormgpt-app",
+  "version": "1.0.0",
+  "description": "WormGPT AI Application",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.0.0"
+  }
+}
