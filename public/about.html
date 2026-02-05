@@ -85,54 +85,6 @@
             border-bottom: 1px solid rgba(255, 0, 0, 0.2);
         }
 
-        .mobile-menu-toggle {
-            display: none;
-            background: transparent;
-            border: none;
-            color: var(--primary-red);
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 1001;
-        }
-
-        .mobile-menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .mobile-menu-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .mobile-menu-overlay a {
-            color: var(--text-white);
-            text-decoration: none;
-            font-size: 1.5rem;
-            font-family: var(--font-display);
-            text-transform: uppercase;
-            transition: color 0.3s;
-        }
-
-        .mobile-menu-overlay a:hover,
-        .mobile-menu-overlay a.active {
-            color: var(--primary-red);
-        }
-
         .logo-container {
             display: flex;
             align-items: center;
@@ -190,6 +142,63 @@
         nav a.active {
             color: var(--primary-red);
             text-shadow: 0 0 5px var(--primary-red);
+        }
+
+        /* Responsive Navbar & Hamburger */
+        .mobile-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 5px;
+            transition: color 0.3s;
+        }
+
+        .mobile-toggle:hover {
+            color: var(--primary-red);
+        }
+
+        @media (max-width: 992px) {
+            header {
+                grid-template-columns: 1fr auto;
+                padding: 10px 20px;
+            }
+
+            .header-section.center {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: rgba(5, 5, 5, 0.95);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                border-left: 1px solid rgba(255, 0, 51, 0.2);
+                z-index: 1000;
+            }
+
+            .header-section.center.active {
+                right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 40px;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .header-section.right {
+                display: none;
+            }
         }
 
         .btn {
@@ -320,39 +329,13 @@
         }
 
         @media (max-width: 768px) {
-            header {
-                grid-template-columns: 1fr auto;
-                padding: 10px 20px;
-            }
-
-            .header-section.center {
-                display: none;
-            }
-
-            .mobile-menu-toggle {
-                display: block;
-            }
-
             .about-title {
-                font-size: 2.2rem;
-            }
-
-            .about-subtitle {
-                font-size: 1rem;
+                font-size: 2.5rem;
             }
 
             .mission-section {
                 flex-direction: column;
-                padding: 30px 20px;
                 text-align: center;
-            }
-
-            .mission-text h2 {
-                font-size: 1.6rem;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
             }
         }
 
@@ -375,7 +358,6 @@
             background: var(--primary-red);
         }
     </style>
-
 </head>
 
 <body>
@@ -389,7 +371,7 @@
                 </div>
             </a>
         </div>
-        <nav class="header-section center">
+        <nav class="header-section center" id="nav-menu">
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="chat.html">Chat</a></li>
@@ -399,39 +381,16 @@
         </nav>
         <div class="header-section right">
             <a href="chat.html" class="btn">Login</a>
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" style="margin-left: 15px;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-            </button>
         </div>
-    </header>
-
-    <div class="mobile-menu-overlay" id="mobile-menu">
-        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()"
-            style="position: absolute; top: 20px; right: 20px;">
+        <button class="mobile-toggle" id="menu-toggle" aria-label="Toggle Menu">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
             </svg>
         </button>
-        <a href="index.html">Home</a>
-        <a href="chat.html">Chat</a>
-        <a href="about.html" class="active">About</a>
-        <a href="pricing.html">Pricing</a>
-    </div>
-
-    <script>
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('active');
-            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
-        }
-    </script>
+    </header>
 
     <main>
         <section class="about-hero">
@@ -484,6 +443,23 @@
         </section>
     </main>
 
+    <script>
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.getElementById('menu-toggle');
+            const navMenu = document.getElementById('nav-menu');
+
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    const isOpen = navMenu.classList.contains('active');
+                    menuToggle.innerHTML = isOpen
+                        ? '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
+                        : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

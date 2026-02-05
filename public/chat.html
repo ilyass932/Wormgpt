@@ -136,74 +136,6 @@
             font-family: var(--font-display);
         }
 
-        @media (max-width: 768px) {
-            .sidebar {
-                position: fixed;
-                left: -280px;
-                top: 0;
-                height: 100vh;
-                z-index: 2000;
-                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                width: 280px;
-                background: var(--bg-black);
-                border-right: 1px solid rgba(255, 0, 0, 0.2);
-            }
-
-            .sidebar.active {
-                transform: translateX(280px);
-                box-shadow: 10px 0 50px rgba(0, 0, 0, 0.9);
-            }
-
-            .sidebar-overlay {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100vw;
-                height: 100vh;
-                background: rgba(0, 0, 0, 0.7);
-                backdrop-filter: blur(5px);
-                z-index: 1999;
-            }
-
-            .sidebar-overlay.active {
-                display: block;
-            }
-
-            .main-content {
-                padding-left: 0;
-                width: 100%;
-            }
-
-            .header-section.center {
-                display: none;
-            }
-
-            header {
-                padding: 10px 15px;
-            }
-
-            .messages-container {
-                padding: 15px;
-            }
-
-            .message {
-                max-width: 90%;
-            }
-
-            .input-area {
-                padding: 15px;
-            }
-
-            .input-wrapper {
-                padding: 10px 15px;
-            }
-
-            .logo-text {
-                font-size: 1.2rem;
-            }
-        }
-
         nav ul {
             display: flex;
             list-style: none;
@@ -248,6 +180,94 @@
             text-shadow: 0 0 5px var(--primary-red);
         }
 
+        /* Responsive Navbar & Hamburger */
+        .mobile-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1100;
+            padding: 5px;
+            transition: color 0.3s;
+        }
+
+        .mobile-toggle:hover {
+            color: var(--primary-red);
+        }
+
+        @media (max-width: 992px) {
+            header {
+                grid-template-columns: 1fr auto;
+                padding: 10px 20px;
+            }
+
+            .header-section.center {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: rgba(5, 5, 5, 0.95);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                border-left: 1px solid rgba(255, 0, 51, 0.2);
+                z-index: 1050;
+            }
+
+            .header-section.center.active {
+                right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 40px;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .header-section.right {
+                display: none;
+            }
+
+            main {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: fixed;
+                left: -100%;
+                top: 60px;
+                height: calc(100vh - 60px);
+                z-index: 999;
+                transition: 0.3s;
+                width: 280px !important;
+            }
+
+            .sidebar.active {
+                left: 0;
+            }
+
+            .chat-messages {
+                padding: 70px 15px 120px 15px;
+            }
+
+            .message-content {
+                max-width: 90%;
+                padding: 12px 18px;
+            }
+
+            .input-area {
+                padding: 15px;
+            }
+        }
+
         .btn {
             padding: 8px 18px;
             border: 2px solid var(--primary-red);
@@ -267,6 +287,34 @@
         .btn:hover {
             background: rgba(255, 0, 51, 0.1);
             box-shadow: 0 0 20px rgba(255, 0, 51, 0.4);
+        }
+
+        .sidebar-toggle-mobile {
+            display: none;
+            position: fixed;
+            bottom: 85px;
+            left: 20px;
+            background: var(--primary-red);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: none;
+            z-index: 1001;
+            box-shadow: 0 4px 15px rgba(255, 0, 51, 0.4);
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar-toggle-mobile {
+                display: flex;
+            }
+
+            .sidebar-toggle {
+                display: none;
+            }
         }
 
         main {
@@ -1568,10 +1616,10 @@
             }
         }
     </style>
+    <base target="_blank">
 </head>
 
 <body>
-    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
     <header>
         <div class="header-section left">
@@ -3196,14 +3244,7 @@
 
         function toggleSidebar() {
             const sidebar = document.querySelector('.sidebar');
-            const overlay = document.getElementById('sidebar-overlay');
             const toggleIcon = document.getElementById('toggle-icon');
-
-            sidebar.classList.toggle('active');
-            if (overlay) {
-                overlay.classList.toggle('active');
-            }
-
             const isSidebarCollapsed = sidebar.classList.toggle('collapsed');
 
             if (isSidebarCollapsed) {
@@ -3229,7 +3270,47 @@
             }
         });
 
-        window.addEventListener('DOMContentLoaded', initApp);
+        window.addEventListener('DOMContentLoaded', () => {
+            initApp();
+
+            // Mobile Menu Toggle
+            const menuToggle = document.getElementById('menu-toggle');
+            const navMenu = document.getElementById('nav-menu');
+
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    const isOpen = navMenu.classList.contains('active');
+                    menuToggle.innerHTML = isOpen
+                        ? '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
+                        : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
+                });
+            }
+
+            // Sidebar Mobile Toggle
+            const sidebarMobileToggle = document.getElementById('sidebar-toggle-mobile');
+            const sidebar = document.querySelector('.sidebar');
+
+            if (sidebarMobileToggle && sidebar) {
+                sidebarMobileToggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('active');
+                    const isActive = sidebar.classList.contains('active');
+                    sidebarMobileToggle.style.backgroundColor = isActive ? 'var(--dark-red)' : 'var(--primary-red)';
+                });
+            }
+
+            // Close menu/sidebar when clicking outside
+            document.addEventListener('click', (e) => {
+                if (navMenu && menuToggle && !navMenu.contains(e.target) && !menuToggle.contains(e.target) && navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    menuToggle.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
+                }
+                if (sidebar && sidebarMobileToggle && !sidebar.contains(e.target) && !sidebarMobileToggle.contains(e.target) && sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
+                    sidebarMobileToggle.style.backgroundColor = 'var(--primary-red)';
+                }
+            });
+        });
         // ===== Credit System Logic =====
         async function fetchUserProfile() {
             try {
