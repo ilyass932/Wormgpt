@@ -478,10 +478,14 @@
             }, 1000);
         }
 
-        sendBtn.addEventListener('click', handleAISubmit);
+        sendBtn.addEventListener('click', () => {
+            console.log('Send button clicked');
+            handleAISubmit();
+        });
         aiInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
+                console.log('Enter pressed');
                 handleAISubmit();
             }
         });
