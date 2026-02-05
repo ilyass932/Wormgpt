@@ -144,63 +144,6 @@
             text-shadow: 0 0 5px var(--primary-red);
         }
 
-        /* Responsive Navbar & Hamburger */
-        .mobile-toggle {
-            display: none;
-            background: transparent;
-            border: none;
-            color: var(--text-white);
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 1001;
-            padding: 5px;
-            transition: color 0.3s;
-        }
-
-        .mobile-toggle:hover {
-            color: var(--primary-red);
-        }
-
-        @media (max-width: 992px) {
-            header {
-                grid-template-columns: 1fr auto;
-                padding: 10px 20px;
-            }
-
-            .header-section.center {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 280px;
-                height: 100vh;
-                background: rgba(5, 5, 5, 0.95);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                justify-content: center;
-                transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                border-left: 1px solid rgba(255, 0, 51, 0.2);
-                z-index: 1000;
-            }
-
-            .header-section.center.active {
-                right: 0;
-            }
-
-            nav ul {
-                flex-direction: column;
-                align-items: center;
-                gap: 40px;
-            }
-
-            .mobile-toggle {
-                display: block;
-            }
-
-            .header-section.right {
-                display: none;
-            }
-        }
-
         .btn {
             padding: 8px 18px;
             border: 2px solid var(--primary-red);
@@ -358,6 +301,7 @@
             background: var(--primary-red);
         }
     </style>
+    <base target="_blank">
 </head>
 
 <body>
@@ -371,7 +315,7 @@
                 </div>
             </a>
         </div>
-        <nav class="header-section center" id="nav-menu">
+        <nav class="header-section center">
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="chat.html">Chat</a></li>
@@ -382,14 +326,6 @@
         <div class="header-section right">
             <a href="chat.html" class="btn">Login</a>
         </div>
-        <button class="mobile-toggle" id="menu-toggle" aria-label="Toggle Menu">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <line x1="3" y1="12" x2="21" y2="12"></line>
-                <line x1="3" y1="6" x2="21" y2="6"></line>
-                <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-        </button>
     </header>
 
     <main>
@@ -443,23 +379,6 @@
         </section>
     </main>
 
-    <script>
-        // Mobile Menu Toggle
-        document.addEventListener('DOMContentLoaded', () => {
-            const menuToggle = document.getElementById('menu-toggle');
-            const navMenu = document.getElementById('nav-menu');
-
-            if (menuToggle && navMenu) {
-                menuToggle.addEventListener('click', () => {
-                    navMenu.classList.toggle('active');
-                    const isOpen = navMenu.classList.contains('active');
-                    menuToggle.innerHTML = isOpen
-                        ? '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
-                        : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
-                });
-            }
-        });
-    </script>
 </body>
 
 </html>
