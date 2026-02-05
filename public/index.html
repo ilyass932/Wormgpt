@@ -178,6 +178,54 @@
             border-bottom: 1px solid rgba(255, 0, 0, 0.2);
         }
 
+        .mobile-menu-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--primary-red);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu-overlay a {
+            color: var(--text-white);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .mobile-menu-overlay a:hover,
+        .mobile-menu-overlay a.active {
+            color: var(--primary-red);
+        }
+
         .logo-container {
             display: flex;
             align-items: center;
@@ -545,7 +593,7 @@
             background: var(--primary-red);
         }
     </style>
-<base target="_blank">
+
 </head>
 
 <body>
@@ -571,8 +619,31 @@
         </nav>
         <div class="header-section right">
             <a href="chat.html" class="btn">Login</a>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" style="margin-left: 15px;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
         </div>
     </header>
+
+    <div class="mobile-menu-overlay" id="mobile-menu">
+        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()"
+            style="position: absolute; top: 20px; right: 20px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <a href="index.html" class="active">Home</a>
+        <a href="chat.html">Chat</a>
+        <a href="about.html">About</a>
+        <a href="pricing.html">Pricing</a>
+    </div>
 
     <main>
         <section class="landing-page">
@@ -708,6 +779,12 @@
 
         // Start typing
         setTimeout(type, 1000);
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+        }
     </script>
 </body>
 

@@ -136,6 +136,74 @@
             font-family: var(--font-display);
         }
 
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -280px;
+                top: 0;
+                height: 100vh;
+                z-index: 2000;
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                width: 280px;
+                background: var(--bg-black);
+                border-right: 1px solid rgba(255, 0, 0, 0.2);
+            }
+
+            .sidebar.active {
+                transform: translateX(280px);
+                box-shadow: 10px 0 50px rgba(0, 0, 0, 0.9);
+            }
+
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.7);
+                backdrop-filter: blur(5px);
+                z-index: 1999;
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
+
+            .main-content {
+                padding-left: 0;
+                width: 100%;
+            }
+
+            .header-section.center {
+                display: none;
+            }
+
+            header {
+                padding: 10px 15px;
+            }
+
+            .messages-container {
+                padding: 15px;
+            }
+
+            .message {
+                max-width: 90%;
+            }
+
+            .input-area {
+                padding: 15px;
+            }
+
+            .input-wrapper {
+                padding: 10px 15px;
+            }
+
+            .logo-text {
+                font-size: 1.2rem;
+            }
+        }
+
         nav ul {
             display: flex;
             list-style: none;
@@ -1500,11 +1568,10 @@
             }
         }
     </style>
-    <base target="_blank">
-    <base target="_blank">
 </head>
 
 <body>
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
     <header>
         <div class="header-section left">
@@ -3129,7 +3196,14 @@
 
         function toggleSidebar() {
             const sidebar = document.querySelector('.sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
             const toggleIcon = document.getElementById('toggle-icon');
+
+            sidebar.classList.toggle('active');
+            if (overlay) {
+                overlay.classList.toggle('active');
+            }
+
             const isSidebarCollapsed = sidebar.classList.toggle('collapsed');
 
             if (isSidebarCollapsed) {
