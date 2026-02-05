@@ -62,24 +62,35 @@ export default async function handler(req, res) {
         const secretKey = process.env.PROMPT_SECRET_KEY;
         let systemPromptText = "";
 
-        if (selectedModel.includes('kimi')) {
+        console.log('Backend Info: Selected Model:', selectedModel);
+        console.log('Backend Info: Has Secret Key:', !!secretKey);
+
+        if (selectedModel.toLowerCase().includes('kimi')) {
             systemPromptText = decrypt(ENCRYPTED_PROMPT_PRO, secretKey);
-        } else if (selectedModel.includes('qwen')) {
+            console.log('Backend Info: Attempted to decrypt PRO prompt. Success:', !!systemPromptText);
+        } else if (selectedModel.toLowerCase().includes('qwen')) {
             systemPromptText = decrypt(ENCRYPTED_PROMPT_FLASH, secretKey);
+            console.log('Backend Info: Attempted to decrypt FLASH prompt. Success:', !!systemPromptText);
+        } else {
+            // Fallback: Try PRO prompt if no specific match
+            systemPromptText = decrypt(ENCRYPTED_PROMPT_PRO, secretKey);
+            console.warn('Backend Warning: Model does not match specific categories. Falling back to PRO prompt.');
         }
 
         // Add the decrypted system prompt as the first message
         if (systemPromptText) {
             cleanMessages.unshift({ role: 'system', content: systemPromptText });
+            console.log('Backend Info: System prompt injected successfully.');
         } else {
             console.warn('Backend Warning: System prompt decryption failed or PROMPT_SECRET_KEY is missing.');
         }
 
-        const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        // Use OpenRouter API instead of Groq
+        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
+                'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY || process.env.GROQ_API_KEY}`
             },
             body: JSON.stringify({
                 model: selectedModel,
@@ -92,8 +103,8 @@ export default async function handler(req, res) {
 
         if (!response.ok) {
             const errorData = await response.text();
-            console.error('Groq API error:', errorData);
-            return res.status(response.status).json({ error: 'Groq API error', details: errorData });
+            console.error('API error:', errorData);
+            return res.status(response.status).json({ error: 'API error', details: errorData });
         }
 
         const data = await response.json();
